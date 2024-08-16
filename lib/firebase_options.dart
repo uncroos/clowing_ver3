@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'clowing-32621.appspot.com',
     measurementId: 'G-7581ZE0JNG',
   );
+
 }
