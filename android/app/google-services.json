@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "961629805239",
+    "project_id": "clowing-32621",
+    "storage_bucket": "clowing-32621.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961629805239:android:9b3cac220d2c0dbe5c4b32",
+        "android_client_info": {
+          "package_name": "com.example.clowing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNlyd-EwWEoqg17ZPF3Tz1bF7btabplWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
