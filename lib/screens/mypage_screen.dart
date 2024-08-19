@@ -1,5 +1,7 @@
+import 'package:clowing_ver3/screens/start/login_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // 카카오 SDK 임포트
 
 class MyPageScreen extends StatefulWidget {
   @override
@@ -81,7 +83,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
               ],
               onSelected: (String selectedOption) {
                 setState(() {
-                  _selectedGender = selectedOption;
+                  _selectedAge = selectedOption;
                 });
               },
             ),
@@ -103,13 +105,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
               ],
               onSelected: (String selectedOption) {
                 setState(() {
-                  _selectedGender = selectedOption;
+                  _selectedHeight = selectedOption;
                 });
               },
             ),
             SizedBox(height: 30),
             ChoiceBox(
-              title: '키',
+              title: '몸무게', // 키로 잘못 설정되어 있어 몸무게로 수정
               options: [
                 "39kg 이하",
                 "40kg",
@@ -129,7 +131,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
               ],
               onSelected: (String selectedOption) {
                 setState(() {
-                  _selectedGender = selectedOption;
+                  _selectedWeight = selectedOption;
                 });
               },
             ),
@@ -137,16 +139,28 @@ class _MyPageScreenState extends State<MyPageScreen> {
               height: 40,
               width: double.infinity,
             ),
-            LogoutButton(),
+            LogoutButton(), // 로그아웃 버튼 위젯
           ],
         ),
       ),
     );
   }
 
+  // 로그아웃 버튼
   Widget LogoutButton() {
     return InkWell(
-      onTap: () {},
+      onTap: () async {
+        // 로그아웃 로직 추가
+        try {
+          await UserApi.instance.logout();
+          print('로그아웃 성공, SDK에서 토큰 삭제');
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => StartScreen()),
+          );
+        } catch (error) {
+          print('로그아웃 실패 $error');
+        }
+      },
       child: Card(
         margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
@@ -176,7 +190,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   }
 }
 
-// ChoiceBox 위젯 정의
+// ChoiceBox 위젯 정의 (기존 내용 그대로 사용)
 class ChoiceBox extends StatefulWidget {
   final String title; // ChoiceBox 제목
   final List<String> options; // 선택 가능한 옵션 목록
@@ -248,6 +262,7 @@ class _ChoiceBoxState extends State<ChoiceBox> {
   }
 }
 
+// InputBox 위젯 정의 (기존 내용 그대로 사용)
 class InputBox extends StatelessWidget {
   final double width = 200;
   final double height = 60;

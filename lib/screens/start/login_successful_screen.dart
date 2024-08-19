@@ -14,10 +14,8 @@ class _LoginSuccessfulScreenState extends State<LoginSuccessfulScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-                top: 280.0), // Adjust this value to position the button
-          ),
+          Spacer(),
+          Spacer(),
           Image.asset(
             'assets/images/F2.png', // Replace with your logo image asset path
             width: 350,
