@@ -81,7 +81,7 @@ class _TopScreenState extends State<TopScreen> {
               ),
             ),
             const SizedBox(
-              height: 20, // Reduce size for better responsiveness
+              height: 0, // Reduce size for better responsiveness
             ),
             Container(
               height: MediaQuery.of(context).size.height *
@@ -152,9 +152,9 @@ class _TopScreenState extends State<TopScreen> {
           child: Text(
             title,
             style: TextStyle(
-              color: isSelected ? Colors.black : const Color(0xFF787878),
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            ),
+                color: isSelected ? Colors.black : const Color(0xFF787878),
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontSize: 13),
           ),
         ),
       ),

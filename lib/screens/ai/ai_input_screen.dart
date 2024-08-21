@@ -63,7 +63,7 @@ class _AiInputScreenState extends State<AiInputScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 300),
+            Spacer(),
             Text(
               '원하시는 색을 입력하세요',
               style: TextStyle(
