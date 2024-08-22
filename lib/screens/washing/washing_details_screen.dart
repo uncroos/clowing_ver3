@@ -1,4 +1,4 @@
-import 'package:clowing_ver3/screens/washing/washing_main.dart';
+import 'package:clowing_ver3/screens/washing/washing_completed_screen.dart';
 import 'package:flutter/material.dart';
 
 class WashingDetailsScreen extends StatelessWidget {
@@ -93,7 +93,7 @@ class WashingDetailsScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WashingMainScreen()),
+                          builder: (context) => WashingCompletedScreen()),
                     );
                   },
                   child: Container(
