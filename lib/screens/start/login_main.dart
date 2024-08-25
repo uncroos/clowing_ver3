@@ -23,7 +23,7 @@ class _StartScreenState extends State<StartScreen> {
             width: 250,
             height: 250,
           ),
-          Spacer(), // Takes up the remaining space
+          // Takes up the remaining space
           Padding(
             padding: const EdgeInsets.only(
                 bottom: 80.0), // Adjust this value to position the button
