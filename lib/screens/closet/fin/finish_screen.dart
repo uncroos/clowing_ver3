@@ -14,10 +14,8 @@ class _FinishScreenState extends State<FinishScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-                top: 350.0), // Adjust this value to position the button
-          ),
+          Spacer(),
+          Spacer(),
           Image.asset(
             'assets/images/closet_pin.png', // Replace with your logo image asset path
             width: 180,
