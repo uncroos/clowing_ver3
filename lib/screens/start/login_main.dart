@@ -23,6 +23,7 @@ class _StartScreenState extends State<StartScreen> {
             width: 250,
             height: 250,
           ),
+          Spacer(),
           // Takes up the remaining space
           Padding(
             padding: const EdgeInsets.only(
