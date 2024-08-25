@@ -1,4 +1,4 @@
-import 'package:clowing_ver3/screens/closet/add/add_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:clowing_ver3/screens/closet/clothes/bag_screen.dart';
 import 'package:clowing_ver3/screens/closet/clothes/fashion_screen.dart';
 import 'package:clowing_ver3/screens/closet/clothes/low_screen.dart';
@@ -80,50 +80,57 @@ class _TopScreenState extends State<TopScreen> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 0, // Reduce size for better responsiveness
-            ),
+            const SizedBox(height: 0),
             Container(
-              height: MediaQuery.of(context).size.height *
-                  0.6, // Set dynamic height
+              height: MediaQuery.of(context).size.height * 0.6,
               child: Row(
                 children: [
                   VerticalDivider(thickness: 1, width: 1),
                   Expanded(
                     child: Container(
                       color: Colors.white,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: GridView.count(
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('clothes')
+                            .where('category', isEqualTo: '상의')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          final clothes = snapshot.data!.docs;
+                          return GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              children: [],
+                              childAspectRatio: 3 / 4,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddScreen()),
-                                );
-                              },
-                              child: Text('상의 추가하기'),
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                backgroundColor: Colors.brown[200],
-                                textStyle: TextStyle(
-                                    fontWeight: FontWeight.w900, fontSize: 17),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
+                            itemCount: clothes.length,
+                            itemBuilder: (context, index) {
+                              final item = clothes[index];
+                              return Card(
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Image.network(
+                                        item['imageUrl'],
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        item['name'],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                minimumSize: Size(double.infinity, 50),
-                              ),
-                            ),
-                          ),
-                        ],
+                              );
+                            },
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -141,8 +148,7 @@ class _TopScreenState extends State<TopScreen> {
     return Container(
       color: isSelected ? const Color(0xFFEBEBEB) : Colors.white,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(
-          vertical: 12.0, horizontal: 8.0), // Adjust padding for responsiveness
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
       child: Align(
         alignment: Alignment.centerLeft,
         child: TextButton(

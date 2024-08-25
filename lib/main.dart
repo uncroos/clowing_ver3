@@ -5,10 +5,14 @@ import 'package:clowing_ver3/screens/splash/splash.dart';
 import 'package:clowing_ver3/screens/washing/washing_main.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_template.dart';
-// Import the splash screen
+import 'package:firebase_core/firebase_core.dart'; // Firebase 추가
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Firebase 초기화
+  await Firebase.initializeApp();
+
   // Kakao SDK 초기화
   KakaoSdk.init(
     nativeAppKey: 'e47a16bbc2de7f9bb684384b295bcd3c',
