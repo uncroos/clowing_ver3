@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:clowing_ver3/screens/closet/add/add_screen.dart';
 import 'package:clowing_ver3/screens/closet/clothes/bag_screen.dart';
 import 'package:clowing_ver3/screens/closet/clothes/fashion_screen.dart';
 import 'package:clowing_ver3/screens/closet/clothes/low_screen.dart';
@@ -137,6 +138,53 @@ class _TopScreenState extends State<TopScreen> {
                 ],
               ),
             ),
+            Container(
+              height: MediaQuery.of(context).size.height *
+                  0.6, // Set dynamic height
+              child: Row(
+                children: [
+                  VerticalDivider(thickness: 1, width: 1),
+                  Expanded(
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: GridView.count(
+                              crossAxisCount: 2,
+                              children: [],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddScreen()),
+                                );
+                              },
+                              child: Text('신발 추가하기'),
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.brown[200],
+                                textStyle: TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 17),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                minimumSize: Size(double.infinity, 50),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

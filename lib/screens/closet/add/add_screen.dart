@@ -19,6 +19,17 @@ class _AddScreenState extends State<AddScreen> {
   String? _selectedCategory;
 
   @override
+  void initState() {
+    super.initState();
+    _materialController.addListener(() {
+      setState(() {});
+    });
+    _descriptionController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   void dispose() {
     _materialController.dispose();
     _descriptionController.dispose();
@@ -45,39 +56,48 @@ class _AddScreenState extends State<AddScreen> {
       return;
     }
 
-    // Firebase Storage에 이미지 업로드
-    String imageUrl;
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child('images/${DateTime.now().toString()}.jpg');
-    await storageRef.putFile(_image!);
-    imageUrl = await storageRef.getDownloadURL();
+    try {
+      // Firebase Storage에 이미지 업로드
+      String imageUrl;
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('images/${DateTime.now().toString()}.jpg');
 
-    // Firestore에 데이터 저장
-    await FirebaseFirestore.instance.collection('clothes').add({
-      'name': _nameController.text,
-      'category': _selectedCategory,
-      'color': _selectedColor?.value,
-      'material': _materialController.text,
-      'description': _descriptionController.text,
-      'imageUrl': imageUrl,
-    });
+      // 파일을 업로드하고 업로드 작업이 완료될 때까지 대기합니다.
+      TaskSnapshot uploadTask = await storageRef.putFile(_image!);
 
-    // 저장 후 화면 초기화
-    setState(() {
-      _image = null;
-      _nameController.clear();
-      _selectedCategory = null;
-      _selectedColor = null;
-      _materialController.clear();
-      _descriptionController.clear();
-    });
+      // 업로드된 파일의 다운로드 URL을 가져옵니다.
+      imageUrl = await uploadTask.ref.getDownloadURL();
 
-    // FinishScreen으로 이동
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => FinishScreen()),
-    );
+      // Firestore에 데이터 저장
+      await FirebaseFirestore.instance.collection('clothes').add({
+        'name': _nameController.text,
+        'category': _selectedCategory,
+        'color': _selectedColor?.value,
+        'material': _materialController.text,
+        'description': _descriptionController.text,
+        'imageUrl': imageUrl,
+      });
+
+      // 저장 후 화면 초기화
+      setState(() {
+        _image = null;
+        _nameController.clear();
+        _selectedCategory = null;
+        _selectedColor = null;
+        _materialController.clear();
+        _descriptionController.clear();
+      });
+
+      // FinishScreen으로 이동
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FinishScreen()),
+      );
+    } catch (e) {
+      print("Error uploading image: $e");
+      // 여기에 사용자에게 오류를 알리는 UI를 추가할 수 있습니다.
+    }
   }
 
   @override
@@ -88,7 +108,178 @@ class _AddScreenState extends State<AddScreen> {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            // (생략된 기존 코드)
+            Text(
+              '내 옷장',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 40),
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: _pickImage,
+                  child: Container(
+                    width: 120,
+                    height: 130,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: _image == null
+                        ? Icon(Icons.camera_alt,
+                            size: 50, color: Colors.grey[600])
+                        : Image.file(_image!, fit: BoxFit.cover),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          labelText: '이름',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      DropdownButtonFormField<String>(
+                        items: [
+                          DropdownMenuItem(child: Text("상의"), value: "상의"),
+                          DropdownMenuItem(child: Text("하의"), value: "하의"),
+                          DropdownMenuItem(child: Text("아우터"), value: "아우터"),
+                          DropdownMenuItem(child: Text("신발"), value: "신발"),
+                          DropdownMenuItem(child: Text("가방"), value: "가방"),
+                          DropdownMenuItem(child: Text("패션소품"), value: "패션소품"),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedCategory = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: '카테고리',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 30),
+            Text(
+              '컬러',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(height: 10),
+            Wrap(
+              spacing: 5.5,
+              children: [
+                for (var color in [
+                  Colors.red,
+                  Colors.orange,
+                  Colors.yellow,
+                  Colors.green,
+                  Colors.blue,
+                  Colors.purple,
+                  Colors.pink,
+                  Colors.grey,
+                  Colors.white,
+                  Colors.black,
+                  Colors.brown
+                ])
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedColor = color;
+                      });
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: color,
+                        border: Border.all(
+                          color: _selectedColor == color
+                              ? Colors.black
+                              : Colors.transparent,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.zero,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            SizedBox(height: 50),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('소재'),
+                    Text(
+                      '${_materialController.text.length}/100',
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                TextField(
+                  controller: _materialController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    counterText: '',
+                  ),
+                  maxLength: 100,
+                ),
+                SizedBox(height: 8),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      Icon(Icons.camera_alt, color: Colors.blue),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          '여기를 눌러 택을 촬영해보세요!',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 50),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('설명'),
+                        Text(
+                          '${_descriptionController.text.length}/100',
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                    TextField(
+                      controller: _descriptionController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        counterText: '',
+                      ),
+                      maxLength: 100,
+                      maxLines: 3,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+              ],
+            ),
             SizedBox(height: 35),
             Center(
               child: GestureDetector(
