@@ -1,4 +1,4 @@
-import 'package:clowing_ver3/screens/washing/washing_main.dart';
+import 'package:clowing_ver3/screens/washing/washing_screen.dart';
 import 'package:flutter/material.dart';
 
 class WashingCompletedScreen extends StatefulWidget {
@@ -44,7 +44,7 @@ class _WashingCompletedScreenState extends State<WashingCompletedScreen> {
         // Navigate to the closet main screen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => WashingMainScreen()),
+          MaterialPageRoute(builder: (context) => WashingScreen()),
         );
       },
       child: Card(

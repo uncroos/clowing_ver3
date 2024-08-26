@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:clowing_ver3/screens/washing/washing_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
+import 'washing_details_screen.dart';
 
 class WashingScreen extends StatefulWidget {
   @override
@@ -33,7 +33,6 @@ class _WashingScreenState extends State<WashingScreen> {
             }
             final clothes = snapshot.data!.docs;
 
-            // Sort the clothes by a timestamp field or any other field to get the oldest items
             clothes.sort((a, b) => a['timestamp'].compareTo(b['timestamp']));
 
             return GridView.builder(
@@ -48,17 +47,30 @@ class _WashingScreenState extends State<WashingScreen> {
                 final item = clothes[index];
                 final bool isOldestItem = index < 2;
 
+                // Ensure type safety by handling potential type mismatches
+                final imageUrl = item['imageUrl'] as String;
+                final name = item['name'] as String;
+                final color = (item['color'] is String)
+                    ? item['color'] as String
+                    : item['color'].toString();
+                final material = (item['material'] is String)
+                    ? item['material'] as String
+                    : item['material'].toString();
+                final description = (item['description'] is String)
+                    ? item['description'] as String
+                    : item['description'].toString();
+
                 return GestureDetector(
                   onTap: () {
-                    // Navigate to the detailed screen with item's data
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => WashingDetailsScreen(
-                          imageUrl: item['imageUrl'],
-                          name: item['name'],
-                          material: item['material'],
-                          description: item['description'],
+                          imageUrl: imageUrl,
+                          color: color,
+                          name: name,
+                          material: material,
+                          description: description,
                         ),
                       ),
                     );
@@ -75,7 +87,7 @@ class _WashingScreenState extends State<WashingScreen> {
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(12)),
                               child: Image.network(
-                                item['imageUrl'],
+                                imageUrl,
                                 fit: BoxFit.cover,
                                 height: itemHeight,
                                 width: double.infinity,
@@ -84,7 +96,7 @@ class _WashingScreenState extends State<WashingScreen> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                item['name'],
+                                name,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.center,
                               ),
