@@ -66,24 +66,38 @@ class _ClothesScreenState extends State<ClothesScreen> {
                         itemCount: clothes.length,
                         itemBuilder: (context, index) {
                           final item = clothes[index];
-                          return Card(
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Image.network(
-                                    item['imageUrl'],
-                                    fit: BoxFit.cover,
+                          return Container(
+                            margin: EdgeInsets.all(8.0), // 카드의 외부 여백 설정
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(12.0), // 라운드 설정
+                              ),
+                              clipBehavior: Clip.hardEdge,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(
+                                              12.0)), // 이미지의 모서리 라운드 설정
+                                      child: Image.network(
+                                        item['imageUrl'],
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    item['name'],
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      item['name'],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         },

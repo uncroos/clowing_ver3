@@ -13,7 +13,7 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   File? _image;
   Color? _selectedColor;
-  final _materialController = TextEditingController();
+  String? _selectedMaterial;
   final _descriptionController = TextEditingController();
   final _nameController = TextEditingController();
   String? _selectedCategory;
@@ -21,9 +21,6 @@ class _AddScreenState extends State<AddScreen> {
   @override
   void initState() {
     super.initState();
-    _materialController.addListener(() {
-      setState(() {});
-    });
     _descriptionController.addListener(() {
       setState(() {});
     });
@@ -31,7 +28,6 @@ class _AddScreenState extends State<AddScreen> {
 
   @override
   void dispose() {
-    _materialController.dispose();
     _descriptionController.dispose();
     _nameController.dispose();
     super.dispose();
@@ -51,7 +47,8 @@ class _AddScreenState extends State<AddScreen> {
   Future<void> _saveToFirebase() async {
     if (_image == null ||
         _nameController.text.isEmpty ||
-        _selectedCategory == null) {
+        _selectedCategory == null ||
+        _selectedMaterial == null) {
       // 모든 필수 필드가 채워지지 않은 경우
       return;
     }
@@ -74,9 +71,10 @@ class _AddScreenState extends State<AddScreen> {
         'name': _nameController.text,
         'category': _selectedCategory,
         'color': _selectedColor?.value,
-        'material': _materialController.text,
+        'material': _selectedMaterial,
         'description': _descriptionController.text,
         'imageUrl': imageUrl,
+        'timestamp': FieldValue.serverTimestamp(), // 타임스탬프 추가
       });
 
       // 저장 후 화면 초기화
@@ -85,7 +83,7 @@ class _AddScreenState extends State<AddScreen> {
         _nameController.clear();
         _selectedCategory = null;
         _selectedColor = null;
-        _materialController.clear();
+        _selectedMaterial = null;
         _descriptionController.clear();
       });
 
@@ -226,19 +224,34 @@ class _AddScreenState extends State<AddScreen> {
                   children: [
                     Text('소재'),
                     Text(
-                      '${_materialController.text.length}/100',
+                      _selectedMaterial ?? '',
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
                 ),
                 SizedBox(height: 8),
-                TextField(
-                  controller: _materialController,
+                DropdownButtonFormField<String>(
+                  value: _selectedMaterial,
+                  items: [
+                    DropdownMenuItem(child: Text("폴리에스터"), value: "폴리에스터"),
+                    DropdownMenuItem(child: Text("울"), value: "울"),
+                    DropdownMenuItem(child: Text("실크"), value: "실크"),
+                    DropdownMenuItem(child: Text("리넨"), value: "리넨"),
+                    DropdownMenuItem(child: Text("나일론"), value: "나일론"),
+                    DropdownMenuItem(child: Text("레이온"), value: "레이온"),
+                    DropdownMenuItem(child: Text("아크릴"), value: "아크릴"),
+                    DropdownMenuItem(child: Text("스판덱스"), value: "스판덱스"),
+                    DropdownMenuItem(child: Text("기모"), value: "기모"),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedMaterial = value;
+                    });
+                  },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    counterText: '',
+                    labelText: '소재',
                   ),
-                  maxLength: 100,
                 ),
                 SizedBox(height: 8),
                 Container(
