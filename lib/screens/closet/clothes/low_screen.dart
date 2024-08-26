@@ -1,10 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:clowing_ver3/screens/closet/add/add_screen.dart';
-import 'package:clowing_ver3/screens/closet/clothes/bag_screen.dart';
-import 'package:clowing_ver3/screens/closet/clothes/fashion_screen.dart';
-import 'package:clowing_ver3/screens/closet/clothes/outer_screen.dart';
-import 'package:clowing_ver3/screens/closet/clothes/shoes_screen.dart';
-import 'package:clowing_ver3/screens/closet/clothes/top_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
 
@@ -29,8 +24,28 @@ class _LowScreenState extends State<LowScreen> {
       ),
       backgroundColor: Colors.white,
       body: Row(
-        // Row로 변경하여 사이드 메뉴와 콘텐츠가 옆에 위치하도록 함
         children: [
+          Expanded(
+            child: Container(
+              width: 400,
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _buildSearchField(),
+                  ),
+                  Expanded(
+                    child: _buildClothesGrid(),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _buildAddButton(),
+                  ),
+                ],
+              ),
+            ),
+          ),
           Container(
             width: 90,
             padding: const EdgeInsets.only(left: 0),
@@ -49,114 +64,105 @@ class _LowScreenState extends State<LowScreen> {
             ),
           ),
           VerticalDivider(thickness: 1, width: 1),
-          Expanded(
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF1E5DB),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: TextField(
-                                controller: _searchController,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: '검색어 입력',
-                                  hintStyle: TextStyle(color: Colors.black45),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Icon(Icons.search, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('clothes')
-                          .where('category', isEqualTo: selectedCategory)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        final clothes = snapshot.data!.docs;
-                        return GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 9 / 16,
-                          ),
-                          itemCount: clothes.length,
-                          itemBuilder: (context, index) {
-                            final item = clothes[index];
-                            return Column(
-                              children: [
-                                Expanded(
-                                  child: Image.network(
-                                    item['imageUrl'],
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                SizedBox(height: 8.0),
-                                Text(
-                                  item['name'],
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AddScreen()),
-                        );
-                      },
-                      child: Text('$selectedCategory 추가하기'),
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.brown[200],
-                        textStyle: TextStyle(
-                            fontWeight: FontWeight.w900, fontSize: 17),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        minimumSize: Size(double.infinity, 50),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
       bottomNavigationBar: BottomNavBar(),
+    );
+  }
+
+  Widget _buildSearchField() {
+    return Container(
+      width: double.infinity,
+      height: 50.0,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF1E5DB),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextField(
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: '검색어 입력',
+                  hintStyle: TextStyle(color: Colors.black45),
+                ),
+              ),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Icon(Icons.search, color: Colors.grey),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildClothesGrid() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('clothes')
+          .where('category', isEqualTo: selectedCategory)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+        final clothes = snapshot.data!.docs;
+        return GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 9 / 16,
+          ),
+          itemCount: clothes.length,
+          itemBuilder: (context, index) {
+            final item = clothes[index];
+            return Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Image.network(
+                      item['imageUrl'],
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    item['name'],
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildAddButton() {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AddScreen()),
+        );
+      },
+      child: Text('$selectedCategory 추가하기'),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.brown[200],
+        textStyle: TextStyle(fontWeight: FontWeight.w900, fontSize: 17),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        minimumSize: Size(double.infinity, 50),
+      ),
     );
   }
 

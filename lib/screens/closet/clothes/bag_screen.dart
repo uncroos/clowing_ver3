@@ -14,6 +14,7 @@ class BagScreen extends StatefulWidget {
 
 class _BagScreenState extends State<BagScreen> {
   final TextEditingController _searchController = TextEditingController();
+  String selectedCategory = '가방'; // 현재 선택된 카테고리
 
   @override
   Widget build(BuildContext context) {
@@ -26,112 +27,97 @@ class _BagScreenState extends State<BagScreen> {
         automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 50.0,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF1E5DB),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: '검색어 입력',
-                            hintStyle: TextStyle(color: Colors.black45),
-                          ),
-                        ),
-                      ),
+      body: Row(
+        children: [
+          // 사이드 메뉴
+          Container(
+            width: 90,
+            padding: const EdgeInsets.only(left: 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildSideMenuItem('상의', selectedCategory == '상의'),
+                _buildSideMenuItem('하의', selectedCategory == '하의'),
+                _buildSideMenuItem('아우터', selectedCategory == '아우터'),
+                _buildSideMenuItem('신발', selectedCategory == '신발'),
+                _buildSideMenuItem('가방', selectedCategory == '가방'), // 현재 선택된 항목
+                _buildSideMenuItem('패션 소품', selectedCategory == '패션 소품'),
+              ],
+            ),
+          ),
+          VerticalDivider(thickness: 1, width: 1),
+          // 콘텐츠 영역
+          Expanded(
+            child: Column(
+              children: [
+                // 검색어 입력 필드
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1E5DB),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Icon(Icons.search, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                width: 90,
-                padding: const EdgeInsets.only(left: 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildSideMenuItem('상의', false),
-                    _buildSideMenuItem('하의', false),
-                    _buildSideMenuItem('아우터', false),
-                    _buildSideMenuItem('신발', false),
-                    _buildSideMenuItem('가방', true),
-                    _buildSideMenuItem('패션 소품', false),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 0, // Reduce size for better responsiveness
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height *
-                  0.6, // Set dynamic height
-              child: Row(
-                children: [
-                  VerticalDivider(thickness: 1, width: 1),
-                  Expanded(
-                    child: Container(
-                      color: Colors.white,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: GridView.count(
-                              crossAxisCount: 2,
-                              children: [], // Add items here
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddScreen()),
-                                );
-                              },
-                              child: Text('가방 추가하기'),
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.white,
-                                backgroundColor: Colors.brown[200],
-                                textStyle: TextStyle(
-                                    fontWeight: FontWeight.w900, fontSize: 17),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                minimumSize: Size(double.infinity, 50),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: TextField(
+                              controller: _searchController,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: '검색어 입력',
+                                hintStyle: TextStyle(color: Colors.black45),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Icon(Icons.search, color: Colors.grey),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                // 아이템 리스트
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    children: [], // 여기에 가방 데이터 추가 예정
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddScreen()),
+                      );
+                    },
+                    child: Text('가방 추가하기'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.brown[200],
+                      textStyle:
+                          TextStyle(fontWeight: FontWeight.w900, fontSize: 17),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      minimumSize: Size(double.infinity, 50),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavBar(),
     );
@@ -142,7 +128,7 @@ class _BagScreenState extends State<BagScreen> {
       color: isSelected ? const Color(0xFFEBEBEB) : Colors.white,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
-          vertical: 12.0, horizontal: 8.0), // Adjust padding for responsiveness
+          vertical: 12.0, horizontal: 8.0), // 사이드 메뉴의 패딩 조정
       child: Align(
         alignment: Alignment.centerLeft,
         child: TextButton(
@@ -162,43 +148,38 @@ class _BagScreenState extends State<BagScreen> {
   }
 
   void _onMenuItemSelected(String title) {
+    setState(() {
+      selectedCategory = title; // 선택된 카테고리 업데이트
+    });
+
+    Widget screen;
     switch (title) {
       case '상의':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TopScreen()),
-        );
+        screen = TopScreen();
         break;
       case '하의':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => LowScreen()),
-        );
+        screen = LowScreen();
         break;
       case '아우터':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => OuterScreen()),
-        );
+        screen = OuterScreen();
         break;
       case '신발':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ShoesScreen()),
-        );
+        screen = ShoesScreen();
         break;
       case '가방':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BagScreen()),
-        );
+        screen = BagScreen();
         break;
       case '패션 소품':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => FashionScreen()),
-        );
+      default:
+        screen = FashionScreen();
         break;
+    }
+
+    if (screen is! BagScreen) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => screen),
+      );
     }
   }
 }
