@@ -1,3 +1,4 @@
+import 'package:clowing_ver3/screens/washing/washing_completed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
 
@@ -74,18 +75,29 @@ class _WashingDetailsScreenState extends State<WashingDetailsScreen> {
               ),
             ),
             SizedBox(height: 32),
-            Center(
+            Container(
+              padding: const EdgeInsets.all(8.0), // Container의 padding 설정
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle laundry processing action
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WashingCompletedScreen()),
+                  );
                 },
+                child: Text('세탁 처리하기'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.brown[200],
+                  textStyle:
+                      TextStyle(fontWeight: FontWeight.w900, fontSize: 17),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  minimumSize: Size(double.infinity, 50),
                 ),
-                child: Text('세탁 처리하기', style: TextStyle(fontSize: 18)),
               ),
-            ),
+            )
           ],
         ),
       ),
