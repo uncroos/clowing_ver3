@@ -23,55 +23,35 @@ class _LowScreenState extends State<LowScreen> {
         automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.white,
-      body: Row(
+      body: Column(
         children: [
+          _buildSearchField(), // 검색 필드
           Expanded(
-            child: Container(
-              width: 400,
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _buildSearchField(),
-                  ),
-                  Expanded(
-                    child: _buildClothesGrid(),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _buildAddButton(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            width: 90,
-            padding: const EdgeInsets.only(left: 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                _buildSideMenuItem('상의', selectedCategory == '상의'),
-                _buildSideMenuItem('하의', selectedCategory == '하의'),
-                _buildSideMenuItem('아우터', selectedCategory == '아우터'),
-                _buildSideMenuItem('신발', selectedCategory == '신발'),
-                _buildSideMenuItem('가방', selectedCategory == '가방'),
-                _buildSideMenuItem('패션 소품', selectedCategory == '패션 소품'),
+                _buildCategoryList(), // 카테고리 목록
+                VerticalDivider(thickness: 1, width: 1),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(child: _buildClothesGrid()), // 데이터베이스 사진 표시
+                      _buildAddButton(), // "+ 카테고리명 추가하기" 버튼
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          VerticalDivider(thickness: 1, width: 1),
         ],
       ),
       bottomNavigationBar: BottomNavBar(),
     );
   }
 
+  // 검색 필드 위젯
   Widget _buildSearchField() {
     return Container(
+      padding: const EdgeInsets.all(8.0),
       width: double.infinity,
       height: 50.0,
       decoration: BoxDecoration(
@@ -102,6 +82,28 @@ class _LowScreenState extends State<LowScreen> {
     );
   }
 
+  // 카테고리 목록 위젯
+  Widget _buildCategoryList() {
+    return Container(
+      width: 90,
+      padding: const EdgeInsets.only(left: 0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSideMenuItem('상의', selectedCategory == '상의'),
+          _buildSideMenuItem('하의', selectedCategory == '하의'),
+          _buildSideMenuItem('아우터', selectedCategory == '아우터'),
+          _buildSideMenuItem('신발', selectedCategory == '신발'),
+          _buildSideMenuItem('가방', selectedCategory == '가방'),
+          _buildSideMenuItem('패션 소품', selectedCategory == '패션 소품'),
+        ],
+      ),
+    );
+  }
+
+  // 데이터베이스 사진 표시 위젯
   Widget _buildClothesGrid() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
@@ -145,27 +147,32 @@ class _LowScreenState extends State<LowScreen> {
     );
   }
 
+  // "+ 카테고리명 추가하기" 버튼 위젯
   Widget _buildAddButton() {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AddScreen()),
-        );
-      },
-      child: Text('$selectedCategory 추가하기'),
-      style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.brown[200],
-        textStyle: TextStyle(fontWeight: FontWeight.w900, fontSize: 17),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddScreen()),
+          );
+        },
+        child: Text('$selectedCategory 추가하기'),
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.brown[200],
+          textStyle: TextStyle(fontWeight: FontWeight.w900, fontSize: 17),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          minimumSize: Size(double.infinity, 50),
         ),
-        minimumSize: Size(double.infinity, 50),
       ),
     );
   }
 
+  // 카테고리 아이템 위젯
   Widget _buildSideMenuItem(String title, bool isSelected) {
     return Container(
       color: isSelected ? const Color(0xFFEBEBEB) : Colors.white,
