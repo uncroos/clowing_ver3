@@ -165,7 +165,7 @@ class _TopScreenState extends State<TopScreen> {
                                       builder: (context) => AddScreen()),
                                 );
                               },
-                              child: Text('신발 추가하기'),
+                              child: Text('상의 추가하기'),
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
                                 backgroundColor: Colors.brown[200],
