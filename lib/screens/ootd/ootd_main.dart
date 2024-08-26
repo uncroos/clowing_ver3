@@ -1,4 +1,4 @@
-import 'package:clowing_ver3/screens/ootd/clothes/ootd_top_screen.dart';
+import 'package:clowing_ver3/screens/ootd/ootd_clothes.dart';
 import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +60,8 @@ class _OotdMainScreenState extends State<OotdMainScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => OotdTopScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => OotdClothesScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

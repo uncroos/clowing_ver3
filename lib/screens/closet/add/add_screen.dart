@@ -175,7 +175,7 @@ class _AddScreenState extends State<AddScreen> {
             ),
             SizedBox(height: 10),
             Wrap(
-              spacing: 5.5,
+              spacing: 15,
               children: [
                 for (var color in [
                   Colors.red,
@@ -197,15 +197,19 @@ class _AddScreenState extends State<AddScreen> {
                       });
                     },
                     child: Container(
-                      width: 30,
-                      height: 30,
+                      width: 20,
+                      height: 20,
                       decoration: BoxDecoration(
                         color: color,
                         border: Border.all(
                           color: _selectedColor == color
                               ? Colors.black
-                              : Colors.transparent,
-                          width: 2,
+                              : color == Colors.white
+                                  ? Color.fromARGB(
+                                      255, 173, 173, 173) // 하얀색일 경우 얇은 회색 테두리
+                                  : Colors.transparent,
+                          width:
+                              color == Colors.white ? 1 : 2, // 하얀색은 1, 나머지는 2
                         ),
                         borderRadius: BorderRadius.zero,
                       ),

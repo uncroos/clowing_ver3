@@ -1,7 +1,8 @@
-import 'package:clowing_ver3/screens/closet/clothes/top_screen.dart';
 import 'package:clowing_ver3/screens/mypage_screen.dart';
 import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
+
+import 'clothes/clothes.dart';
 
 class ClosetMainScreen extends StatefulWidget {
   @override
@@ -74,7 +75,7 @@ class _ClosetMainScreenState extends State<ClosetMainScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => TopScreen()),
+                      MaterialPageRoute(builder: (context) => ClothesScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

@@ -1,4 +1,4 @@
-import 'package:clowing_ver3/screens/closet/clothes/top_screen.dart';
+import 'package:clowing_ver3/screens/closet/clothes/clothes.dart';
 import 'package:flutter/material.dart';
 
 class FinishScreen extends StatefulWidget {
@@ -42,7 +42,7 @@ class _FinishScreenState extends State<FinishScreen> {
         // Navigate to the closet main screen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TopScreen()),
+          MaterialPageRoute(builder: (context) => ClothesScreen()),
         );
       },
       child: Card(
