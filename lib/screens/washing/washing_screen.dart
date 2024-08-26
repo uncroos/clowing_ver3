@@ -1,6 +1,6 @@
-import 'package:clowing_ver3/screens/washing/washing_details_screen.dart';
-import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
 
 class WashingScreen extends StatefulWidget {
   @override
@@ -20,60 +20,60 @@ class _WashingScreenState extends State<WashingScreen> {
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.count(
-          crossAxisCount: 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          children: [
-            // Add your images here as GridTiles
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WashingDetailsScreen(
-                      itemName: '빨간색 티셔츠',
-                      imagePath: 'assets/images/red_shirt.png',
-                    ),
+        padding: const EdgeInsets.all(8.0), // Padding around the GridView
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('clothes')
+              .snapshots(), // Fetches all documents in the collection
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            final clothes = snapshot.data!.docs;
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, // Display 3 items per row
+                childAspectRatio: 2 / 3, // Aspect ratio for the items
+                crossAxisSpacing: 8, // Horizontal spacing between items
+                mainAxisSpacing: 8, // Vertical spacing between items
+              ),
+              itemCount: clothes.length,
+              itemBuilder: (context, index) {
+                final item = clothes[index];
+                return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // Rounded corners
+                  ),
+                  elevation: 4, // Card shadow elevation
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(
+                                12)), // Rounded corners on the top
+                        child: Image.network(
+                          item['imageUrl'],
+                          fit: BoxFit.cover,
+                          height: 150, // Set a fixed height for the image
+                          width: double
+                              .infinity, // Make image take up the full width of the card
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(
+                            8.0), // Padding inside the card
+                        child: Text(
+                          item['name'],
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },
-              child: GridTile(
-                child: Column(
-                  children: [
-                    Image.asset('assets/images/red_shirt.png',
-                        width: 100, height: 100),
-                    SizedBox(height: 8),
-                    Text('빨간색 티셔츠', style: TextStyle(fontSize: 12)),
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WashingDetailsScreen(
-                      itemName: '과잠',
-                      imagePath: 'assets/images/black.png',
-                    ),
-                  ),
-                );
-              },
-              child: GridTile(
-                child: Column(
-                  children: [
-                    Image.asset('assets/images/black.png',
-                        width: 100, height: 100),
-                    SizedBox(height: 8),
-                    Text('과잠', style: TextStyle(fontSize: 12)),
-                  ],
-                ),
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
       bottomNavigationBar: BottomNavBar(), // Add the BottomNavBar widget here
