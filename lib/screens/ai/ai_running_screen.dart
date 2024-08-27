@@ -1,4 +1,4 @@
-import 'package:clowing_ver3/screens/ai/ai_complete_screen.dart';
+import 'package:clowing_ver3/screens/ai/ai_storage_screen.dart';
 import 'package:flutter/material.dart';
 
 class AiRunningScreen extends StatefulWidget {
@@ -14,10 +14,8 @@ class _AiRunningScreenState extends State<AiRunningScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-                top: 350.0), // Adjust this value to position the button
-          ),
+          Spacer(),
+          Spacer(),
           Image.asset(
             'assets/images/ai_glasses.png', // Replace with your logo image asset path
             width: 180,
@@ -44,7 +42,7 @@ class _AiRunningScreenState extends State<AiRunningScreen> {
         // Navigate to the closet main screen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AiCompleteScreen()),
+          MaterialPageRoute(builder: (context) => AiStorageScreen()),
         );
       },
       child: Card(

@@ -2,6 +2,10 @@ import 'package:clowing_ver3/screens/ai/ai_main.dart';
 import 'package:flutter/material.dart';
 
 class AiCompleteScreen extends StatefulWidget {
+  final List<String> selectedItems; // 선택된 아이템 리스트를 위한 필드 추가
+
+  AiCompleteScreen({required this.selectedItems}); // 생성자에서 selectedItems 받기
+
   @override
   _AiCompleteScreenState createState() => _AiCompleteScreenState();
 }
@@ -10,16 +14,14 @@ class _AiCompleteScreenState extends State<AiCompleteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Light blue background color
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-                top: 350.0), // Adjust this value to position the button
-          ),
+          Spacer(),
+          Spacer(),
           Image.asset(
-            'assets/images/ai_pin.png', // Replace with your logo image asset path
+            'assets/images/ai_pin.png',
             width: 180,
             height: 180,
           ),
@@ -27,10 +29,9 @@ class _AiCompleteScreenState extends State<AiCompleteScreen> {
             '개시 완료',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Spacer(), // Takes up the remaining space
+          Spacer(),
           Padding(
-            padding: const EdgeInsets.only(
-                bottom: 100.0), // Adjust this value to position the button
+            padding: const EdgeInsets.only(bottom: 100.0),
             child: Button(),
           ),
         ],
@@ -41,7 +42,7 @@ class _AiCompleteScreenState extends State<AiCompleteScreen> {
   Widget Button() {
     return InkWell(
       onTap: () {
-        // Navigate to the closet main screen
+        // 선택된 아이템 리스트를 AiMainScreen으로 전달할 수 있습니다.
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AiMainScreen()),

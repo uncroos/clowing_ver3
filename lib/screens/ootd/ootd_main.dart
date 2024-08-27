@@ -1,4 +1,4 @@
-import 'package:clowing_ver3/screens/ootd/ootd_clothes.dart';
+import 'package:clowing_ver3/screens/ootd/clothes/ootd_clothes.dart';
 import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 

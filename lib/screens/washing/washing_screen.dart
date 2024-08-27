@@ -45,7 +45,7 @@ class _WashingScreenState extends State<WashingScreen> {
               itemCount: clothes.length,
               itemBuilder: (context, index) {
                 final item = clothes[index];
-                final bool isOldestItem = index < 2;
+                final bool isOldestItem = index < 3;
 
                 // Ensure type safety by handling potential type mismatches
                 final imageUrl = item['imageUrl'] as String;

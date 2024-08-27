@@ -11,6 +11,7 @@ class OotdClothesScreen extends StatefulWidget {
 class _OotdClothesScreenState extends State<OotdClothesScreen> {
   final TextEditingController _searchController = TextEditingController();
   String selectedCategory = '상의'; // 선택된 카테고리를 추적
+  List<String> selectedItems = []; // 선택된 아이템을 추적
 
   @override
   Widget build(BuildContext context) {
@@ -66,24 +67,77 @@ class _OotdClothesScreenState extends State<OotdClothesScreen> {
                         itemCount: clothes.length,
                         itemBuilder: (context, index) {
                           final item = clothes[index];
-                          return Card(
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Image.network(
-                                    item['imageUrl'],
-                                    fit: BoxFit.cover,
+                          final isSelected = selectedItems.contains(item.id);
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (isSelected) {
+                                  selectedItems.remove(item.id);
+                                } else {
+                                  selectedItems.add(item.id);
+                                }
+                              });
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(8.0), // 카드의 외부 여백 설정
+                              child: Stack(
+                                children: [
+                                  Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12.0), // 라운드 설정
+                                    ),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(
+                                                    12.0)), // 이미지의 모서리 라운드 설정
+                                            child: Image.network(
+                                              item['imageUrl'],
+                                              fit: BoxFit.cover,
+                                              width: double.infinity,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            item['name'],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    item['name'],
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                  Positioned(
+                                    top: 8,
+                                    left: 8,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        borderRadius: BorderRadius.circular(4),
+                                        color: Colors.white.withOpacity(0.8),
+                                      ),
+                                      child: Checkbox(
+                                        value: isSelected,
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            if (value == true) {
+                                              selectedItems.add(item.id);
+                                            } else {
+                                              selectedItems.remove(item.id);
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         },
@@ -104,7 +158,7 @@ class _OotdClothesScreenState extends State<OotdClothesScreen> {
                       builder: (context) => OotdCompletionScreen()),
                 );
               },
-              child: Text('룩북만들기'),
+              child: Text('룩북 만들기'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Color(0xFF63A0C3),
@@ -173,7 +227,7 @@ class _OotdClothesScreenState extends State<OotdClothesScreen> {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Icon(Icons.search, color: Color(0xFFCCEDFF)),
+            child: Icon(Icons.search, color: Colors.grey),
           ),
         ],
       ),
