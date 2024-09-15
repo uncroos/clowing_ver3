@@ -48,7 +48,6 @@ class _AiStorageScreenState extends State<AiStorageScreen> {
             ),
             Spacer(),
             Spacer(),
-            Spacer(),
             Button(),
             Spacer(),
             Spacer(),
