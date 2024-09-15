@@ -4,14 +4,14 @@ import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
 class LookbookCompletionScreen extends StatelessWidget {
   final List<OutfitDay> outfitDays = [
     OutfitDay(
-      date: '2024년 7월 17일',
+      date: '2024년 9월 19일',
       items: [
         OutfitItem(name: '반팔 후드', image: 'assets/images/qw.png'),
         OutfitItem(name: '버뮤다 팬츠', image: 'assets/images/qw.png'),
       ],
     ),
     OutfitDay(
-      date: '2024년 7월 16일',
+      date: '2024년 9월 17일',
       items: [
         OutfitItem(name: '아디다스 집업', image: 'assets/images/qw.png'),
         OutfitItem(name: '체육복 바지', image: 'assets/images/qw.png'),
@@ -19,7 +19,7 @@ class LookbookCompletionScreen extends StatelessWidget {
       ],
     ),
     OutfitDay(
-      date: '2024년 7월 15일',
+      date: '2024년 9월 16일',
       items: [
         OutfitItem(name: '빨간색 티셔츠', image: 'assets/images/qw.png'),
         OutfitItem(name: '마이애미 29', image: 'assets/images/qw.png'),
