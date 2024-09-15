@@ -21,7 +21,7 @@ class LookbookCompletionScreen extends StatelessWidget {
     OutfitDay(
       date: '2024년 7월 15일',
       items: [
-        OutfitItem(name: '빨간색 티셔츠', image: 'assets/images/qw.png'),
+        OutfitItem(name: '빨간색 티셔츠', image: ''),
         OutfitItem(name: '마이애미 29', image: 'assets/images/qw.png'),
       ],
     ),
@@ -37,15 +37,13 @@ class LookbookCompletionScreen extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
-      body: ListView.separated(
+      body: ListView.builder(
         itemCount: outfitDays.length,
-        separatorBuilder: (context, index) => Divider(
-          color: Colors.grey[300],
-          thickness: 1,
-          height: 1,
-        ),
         itemBuilder: (context, index) {
-          return OutfitDayWidget(outfitDay: outfitDays[index]);
+          return OutfitDayWidget(
+            outfitDay: outfitDays[index],
+            isLast: index == outfitDays.length - 1,
+          );
         },
       ),
       bottomNavigationBar: BottomNavBar(),
@@ -69,38 +67,74 @@ class OutfitItem {
 
 class OutfitDayWidget extends StatelessWidget {
   final OutfitDay outfitDay;
+  final bool isLast;
 
-  OutfitDayWidget({required this.outfitDay});
+  OutfitDayWidget({required this.outfitDay, required this.isLast});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            outfitDay.date,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTimelineSection(),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, top: 16, bottom: 8),
+                  child: Text(
+                    outfitDay.date,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.75,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemCount: outfitDay.items.length,
+                  itemBuilder: (context, index) {
+                    return OutfitItemWidget(item: outfitDay.items[index]);
+                  },
+                ),
+                SizedBox(height: 16),
+              ],
+            ),
           ),
-        ),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 0.8,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimelineSection() {
+    return Container(
+      width: 50,
+      child: Column(
+        children: [
+          Container(
+            width: 12,
+            height: 12,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.blue,
+            ),
+            margin: EdgeInsets.only(top: 20),
           ),
-          itemCount: outfitDay.items.length,
-          itemBuilder: (context, index) {
-            return OutfitItemWidget(item: outfitDay.items[index]);
-          },
-        ),
-        SizedBox(height: 16),
-      ],
+          Expanded(
+            child: Container(
+              width: 2,
+              color: isLast ? Colors.transparent : Colors.grey[300],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
