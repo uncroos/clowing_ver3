@@ -3,8 +3,9 @@ import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
 
 class LookbookCompletionScreen extends StatelessWidget {
   final List<OutfitDay> outfitDays = [
+    OutfitDay(date: '2024년 9월 19일', items: items),
     OutfitDay(
-      date: '2024년 9월 19일',
+      date: '2024년 9월 18일',
       items: [
         OutfitItem(name: '반팔 후드', image: 'assets/images/qw.png'),
         OutfitItem(name: '버뮤다 팬츠', image: 'assets/images/qw.png'),
