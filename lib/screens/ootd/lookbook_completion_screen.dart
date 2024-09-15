@@ -37,6 +37,7 @@ class LookbookCompletionScreen extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
+      backgroundColor: Colors.white,
       body: ListView.separated(
         itemCount: outfitDays.length,
         separatorBuilder: (context, index) => Divider(
