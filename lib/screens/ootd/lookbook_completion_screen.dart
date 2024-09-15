@@ -7,7 +7,7 @@ class LookbookCompletionScreen extends StatelessWidget {
       date: '2024년 7월 17일',
       items: [
         OutfitItem(name: '반팔 후드', image: 'assets/images/qw.png'),
-        OutfitItem(name: '버뮤다 팬츠', image: 'assets/images/bermuda_pants.png'),
+        OutfitItem(name: '버뮤다 팬츠', image: 'assets/images/qw.png'),
       ],
     ),
     OutfitDay(
