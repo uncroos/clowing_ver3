@@ -31,6 +31,8 @@ class _AiStorageScreenState extends State<AiStorageScreen> {
             Spacer(),
             Spacer(),
             Spacer(),
+            Spacer(),
+            Spacer(),
             Image.asset(
               'assets/images/qw.png', // Camo hoodie image
               width: 150, // Adjust width as needed
@@ -48,6 +50,8 @@ class _AiStorageScreenState extends State<AiStorageScreen> {
             Spacer(),
             Spacer(),
             Button(),
+            Spacer(),
+            Spacer(),
             Spacer(),
           ],
         ),
