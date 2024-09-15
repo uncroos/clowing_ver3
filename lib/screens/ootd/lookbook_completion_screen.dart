@@ -15,7 +15,7 @@ class LookbookCompletionScreen extends StatelessWidget {
       items: [
         OutfitItem(name: '아디다스 집업', image: 'assets/images/qw.png'),
         OutfitItem(name: '체육복 바지', image: 'assets/images/qw.png'),
-        OutfitItem(name: '슬리퍼', image: 'assets/images/slippers.png'),
+        OutfitItem(name: '슬리퍼', image: 'assets/images/qw.png'),
       ],
     ),
     OutfitDay(
