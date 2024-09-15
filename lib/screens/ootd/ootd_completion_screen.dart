@@ -1,3 +1,4 @@
+import 'package:clowing_ver3/screens/ootd/lookbook_completion_screen.dart';
 import 'package:clowing_ver3/screens/ootd/ootd_main.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +45,7 @@ class _OotdCompletionScreenState extends State<OotdCompletionScreen> {
         // Navigate to the closet main screen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => OotdMainScreen()),
+          MaterialPageRoute(builder: (context) => LookbookCompletionScreen()),
         );
       },
       child: Card(
