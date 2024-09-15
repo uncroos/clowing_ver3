@@ -28,7 +28,9 @@ class _AiStorageScreenState extends State<AiStorageScreen> {
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 50),
+            Spacer(),
+            Spacer(),
+            Spacer(),
             Image.asset(
               'assets/images/qw.png', // Camo hoodie image
               width: 150, // Adjust width as needed
