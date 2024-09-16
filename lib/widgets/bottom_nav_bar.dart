@@ -37,6 +37,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
       onTap: _onTabTapped,
       currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.white,
+      unselectedItemColor: Colors.grey,
+      selectedItemColor: Colors.black,
+      showUnselectedLabels: false,
+      showSelectedLabels: false,
       items: [
         BottomNavigationBarItem(
           icon: Icon(
