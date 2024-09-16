@@ -1,1 +1,51 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"clowing-32621","appId":"1:961629805239:android:9b3cac220d2c0dbe5c4b32","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"clowing-32621","appId":"1:961629805239:ios:bca792dcc753627e5c4b32","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"clowing-32621","appId":"1:961629805239:ios:bca792dcc753627e5c4b32","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"clowing-32621","configurations":{"android":"1:961629805239:android:9b3cac220d2c0dbe5c4b32","ios":"1:961629805239:ios:bca792dcc753627e5c4b32","macos":"1:961629805239:ios:bca792dcc753627e5c4b32","web":"1:961629805239:web:57d0ebcd961b39695c4b32","windows":"1:961629805239:web:97e3438bf105f0275c4b32"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "clowing-32621",
+          "appId": "1:961629805239:android:9b3cac220d2c0dbe5c4b32",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "clowing-32621",
+          "appId": "1:961629805239:ios:bca792dcc753627e5c4b32",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "clowing-32621",
+          "appId": "1:961629805239:ios:bca792dcc753627e5c4b32",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "clowing-32621",
+          "configurations": {
+            "android": "1:961629805239:android:9b3cac220d2c0dbe5c4b32",
+            "ios": "1:961629805239:ios:bca792dcc753627e5c4b32",
+            "macos": "1:961629805239:ios:bca792dcc753627e5c4b32",
+            "web": "1:961629805239:web:57d0ebcd961b39695c4b32",
+            "windows": "1:961629805239:web:97e3438bf105f0275c4b32"
+          }
+        }
+      }
+    }
+  },
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}
