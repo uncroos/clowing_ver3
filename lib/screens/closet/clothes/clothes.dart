@@ -54,9 +54,19 @@ class _ClothesScreenState extends State<ClothesScreen> {
                         .where('category', isEqualTo: selectedCategory)
                         .snapshots(),
                     builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       }
+
+                      if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
+
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return Center(
+                            child: Text('No clothes found for this category.'));
+                      }
+
                       final clothes = snapshot.data!.docs;
                       return GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
