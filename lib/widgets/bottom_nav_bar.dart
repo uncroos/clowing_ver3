@@ -36,39 +36,39 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return BottomNavigationBar(
       onTap: _onTabTapped,
       currentIndex: _currentIndex,
-      type: BottomNavigationBarType.fixed, // アイコンの配置を固定
+      type: BottomNavigationBarType.fixed,
       items: [
         BottomNavigationBarItem(
           icon: Icon(
             Icons.door_sliding_outlined,
             color: _currentIndex == 0 ? Colors.black : Colors.grey,
-            size: 24.0, // アイコンのサイズを固定
+            size: 24.0,
           ),
-          label: '', // ラベルを削除
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.local_laundry_service,
             color: _currentIndex == 1 ? Colors.black : Colors.grey,
-            size: 24.0, // アイコンのサイズを固定
+            size: 24.0,
           ),
-          label: '', // ラベルを削除
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.checkroom,
             color: _currentIndex == 2 ? Colors.black : Colors.grey,
-            size: 24.0, // アイコンのサイズを固定
+            size: 24.0,
           ),
-          label: '', // ラベルを削除
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.search,
             color: _currentIndex == 3 ? Colors.black : Colors.grey,
-            size: 24.0, // アイコンのサイズを固定
+            size: 24.0,
           ),
-          label: '', // ラベルを削除
+          label: '',
         ),
       ],
     );
