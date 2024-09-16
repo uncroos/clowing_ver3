@@ -256,17 +256,20 @@ class _AddScreenState extends State<AddScreen> {
                 SizedBox(height: 8),
                 Container(
                   padding: EdgeInsets.all(8),
-                  child: Row(
-                    children: [
-                      Icon(Icons.camera_alt, color: Colors.blue),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          '여기를 눌러 택을 촬영해보세요!',
-                          style: TextStyle(color: Colors.blue),
+                  child: GestureDetector(
+                    onTap: _pickImage,
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera_alt, color: Colors.blue),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            '여기를 눌러 택을 촬영해보세요!',
+                            style: TextStyle(color: Colors.blue),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 50),
