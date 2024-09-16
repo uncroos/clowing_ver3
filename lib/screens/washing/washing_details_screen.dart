@@ -128,7 +128,7 @@ class _WashingDetailsScreenState extends State<WashingDetailsScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 32),
+            SizedBox(height: 102),
             Container(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
