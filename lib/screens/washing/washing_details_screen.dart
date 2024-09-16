@@ -128,6 +128,7 @@ class _WashingDetailsScreenState extends State<WashingDetailsScreen> {
                 ),
               ),
             ),
+            Spacer(),
             Container(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
