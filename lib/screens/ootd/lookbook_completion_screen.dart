@@ -4,29 +4,28 @@ import 'package:clowing_ver3/widgets/bottom_nav_bar.dart';
 class LookbookCompletionScreen extends StatelessWidget {
   final List<OutfitDay> outfitDays = [
     OutfitDay(date: '2024년 9월 19일', items: [
-      OutfitItem(name: '반팔 후드', image: 'assets/images/qw.png'),
-      OutfitItem(name: '버뮤다 팬츠', image: 'assets/images/as.png'),
+      OutfitItem(name: '맨유', image: 'assets/images/menus.png'),
+      OutfitItem(name: '맨유 바지', image: 'assets/images/menu.png'),
     ]),
     OutfitDay(
       date: '2024년 9월 18일',
       items: [
-        OutfitItem(name: '반팔 후드', image: 'assets/images/qw.png'),
-        OutfitItem(name: '버뮤다 팬츠', image: 'assets/images/qw.png'),
+        OutfitItem(name: '노랑옷', image: 'assets/images/yellow.png'),
+        OutfitItem(name: '아디다스 바지', image: 'assets/images/adidas.png'),
       ],
     ),
     OutfitDay(
       date: '2024년 9월 17일',
       items: [
-        OutfitItem(name: '아디다스 집업', image: 'assets/images/qw.png'),
-        OutfitItem(name: '체육복 바지', image: 'assets/images/qw.png'),
-        OutfitItem(name: '슬리퍼', image: 'assets/images/qw.png'),
+        OutfitItem(name: '검정옷', image: 'assets/images/bblack.png'),
+        OutfitItem(name: '버뮤다 팬츠', image: 'assets/images/as.png'),
       ],
     ),
     OutfitDay(
       date: '2024년 9월 16일',
       items: [
         OutfitItem(name: '빨간색 티셔츠', image: 'assets/images/qw.png'),
-        OutfitItem(name: '마이애미 29', image: 'assets/images/qw.png'),
+        OutfitItem(name: '버뮤다 팬츠', image: 'assets/images/as.png'),
       ],
     ),
   ];
